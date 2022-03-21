@@ -36,6 +36,12 @@ export class Recorder {
 
 
    public constructor(num:number){
+      navigator.mediaDevices.getUserMedia({ audio: true })
+      .then(() => console.log('Successfully connected'))
+      .catch(err => {
+         throw new Error('Microphone not detected')
+      })
+
       this.limit = num
       this.act_media = null
       this.act_stream = null
@@ -153,7 +159,7 @@ export class Recorder {
          rec.audio.currentTime = 0
       }
 
-      ind >= 0 ? this.allRecords.splice(ind, 1) : null
+      this.allRecords.splice(ind, 1)
 
       return true
    }
@@ -168,6 +174,15 @@ export class Recorder {
       const d = document.createElement('div')
       const s1 = document.createElement('span')
       const s2 = document.createElement('span')
+
+      const tsc = document.createElement('section')
+      const tsi = document.createElement('i')
+      const ts = document.createElement('span')
+      ts.appendChild(document.createTextNode(`${rec.length_sec.toString()}s`))
+      tsc.className = 'secs'
+      tsi.className = 'fa fa-clock'
+      tsc.appendChild(ts)
+      tsc.appendChild(tsi)
 
       const s = document.createElement('section')
 
@@ -188,6 +203,8 @@ export class Recorder {
       a.appendChild(i_p)
       a.appendChild(p)
       a.appendChild(d)
+
+      a.appendChild(tsc)
       
       rec.audio.addEventListener('ended', () => {
          i_p.className = 'fa fa-play'

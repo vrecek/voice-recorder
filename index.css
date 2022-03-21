@@ -58,9 +58,22 @@ article{
    position: relative;
 }
 
-article i{ font-size: clamp(1rem, 6vw, 1.5rem); }
+.secs{
+   position: absolute;
+   right: 0;
+   top:0;
+   font-size: .7rem;
+   color:white;
+   display: flex;
+   justify-content: flex-end;
+   align-items: center;
+}
 
-article i:not(.fa-trash){
+.secs i{ color:rgb(240, 225, 208); margin-left: .3em; }
+
+article i:not(.fa-clock){ font-size: clamp(1rem, 6vw, 1.5rem); }
+
+article i:not(.fa-trash):not(.fa-clock){
    color: rgb(255, 255, 255);
    text-shadow: 1px 1px 1px royalblue;
    cursor: pointer;
@@ -160,6 +173,8 @@ article div{
    }
 
    section{ width: 100%; }
+
+   .secs{ justify-content: flex-start; }
 
    .new{ margin-bottom: 5em; }
    .new input{ width: 95%; margin:0 auto; display: block; }

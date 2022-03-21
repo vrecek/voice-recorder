@@ -8,9 +8,13 @@ const sec = document.querySelector('.sec') as HTMLElement
 
 const all = document.querySelector('.all') as HTMLElement
 
+navigator.mediaDevices.getUserMedia({ audio: true })
+.then(() => console.log('Successfully connected'))
+.catch(err => {
+   all.textContent = 'Microphone not detected'
+})
+
 const rec = new Recorder(5)
-
-
 
 rec_button.addEventListener("click", async () => {
    if(rec.limitReached()) return
@@ -24,7 +28,7 @@ rec_button.addEventListener("click", async () => {
 
 
 
-stop_button.addEventListener("click", async () => {
+stop_button.addEventListener("click", () => {
    rec_button.classList.toggle('disabled')
    stop_button.classList.toggle('disabled')
 
