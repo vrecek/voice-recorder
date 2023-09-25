@@ -7,7 +7,7 @@ export class Recorder {
     act_chunk;
     act_stream;
     *gen() {
-        let i = -1;
+        let i = 0;
         while (true) {
             yield ++i;
         }
@@ -43,7 +43,7 @@ export class Recorder {
             x.stop();
         }
         this.act_media.addEventListener('stop', () => {
-            const blob = new Blob(this.act_chunk);
+            const blob = new Blob(this.act_chunk, { type: 'audio/mpeg' });
             const url = URL.createObjectURL(blob);
             const audio = new Audio(url);
             this.act_stream = null;
@@ -51,14 +51,13 @@ export class Recorder {
             this.act_media = null;
             const id = this.ids.next().value;
             const [m, s] = time_length.split(':').map(x => parseInt(x.replace('0', '')));
-            let i = m * 60 + s;
-            const name = `Voice ${`00${id}`.slice(-3)}`;
-            const record_name_15 = record_name.slice(0, 15);
+            const name = record_name ? record_name.slice(0, 15) : `Voice ${id}`;
             const finalRecord = {
                 audio: audio,
-                name: record_name_15 || name,
+                url,
+                name,
                 length: time_length || "??:??",
-                length_sec: i,
+                length_sec: m * 60 + s,
                 id: id,
                 RecordedInterval: {
                     interval: null,
@@ -115,6 +114,7 @@ export class Recorder {
         const a = document.createElement('article');
         const i_p = document.createElement('i');
         const i_d = document.createElement('i');
+        const i_dwn = document.createElement('i');
         const p = document.createElement('p');
         const d = document.createElement('div');
         const s1 = document.createElement('span');
@@ -130,6 +130,7 @@ export class Recorder {
         const s = document.createElement('section');
         i_p.className = 'fa fa-play';
         i_d.className = 'fa fa-trash';
+        i_dwn.className = 'fa fa-download';
         p.appendChild(document.createTextNode(rec.name));
         s1.appendChild(document.createTextNode('00:00'));
         s2.appendChild(document.createTextNode(rec.length));
@@ -138,10 +139,17 @@ export class Recorder {
         s.appendChild(s2);
         d.appendChild(s);
         d.appendChild(i_d);
+        d.append(i_dwn);
         a.appendChild(i_p);
         a.appendChild(p);
         a.appendChild(d);
         a.appendChild(tsc);
+        i_dwn.addEventListener('click', () => {
+            const a = document.createElement('a');
+            a.href = rec.url;
+            a.download = `${rec.name}.mp3`;
+            a.click();
+        });
         rec.audio.addEventListener('ended', () => {
             i_p.className = 'fa fa-play';
             clearInterval(rec.RecordedInterval.interval);

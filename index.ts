@@ -1,4 +1,4 @@
-import { Recorder } from "./Recorder.js"
+import { Record, Recorder } from "./Recorder.js"
 const rec_button = document.querySelector('.rec') as HTMLElement
 const stop_button = document.querySelector('.stop') as HTMLElement
 const nameEle = document.querySelector('.name') as HTMLInputElement
@@ -36,7 +36,7 @@ stop_button.addEventListener("click", () => {
    const name = nameEle.value || ''
    nameEle.value = ''
 
-   rec.stop_record(time, name, (record:any) => {
+   rec.stop_record(time, name, (record:Record) => {
       const element = rec.returnNewRecord(record)
 
       const playBtn = element.children[0]

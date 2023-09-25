@@ -16,6 +16,7 @@ body{
    height: inherit;
    width: 2px;
    background: #303030;
+   display: none;
 }
 
 h1{
@@ -39,7 +40,7 @@ main{
 }
 
 section{
-   width: 40%;
+   width: 40%; 
 }
 
 /* */
@@ -80,22 +81,30 @@ article i:not(.fa-trash):not(.fa-clock){
    transition: .2s;
 }
 
-article i.fa-trash{
+article i.fa-trash,
+article i.fa-download{
    position: absolute;
-   left:105%;
-   top:50%;
    width: min-content;
    transform: translateY(-50%);
    color:rgb(126, 0, 0);
    transition: .2s;
    cursor: pointer;
+   top:50%;
+}
+
+article i.fa-trash {
+   left:102%;
+}
+
+article i.fa-download {
+   left: calc(104% + clamp(1rem, 6vw, 1.5rem))
 }
 
 article i.fa-trash:hover{
-   color:red;
+   color:rgb(219, 27, 27);
 }
 
-article i:not(.fa-trash):hover{
+article i.fa-play:hover{
    color:aquamarine;
 }
 
@@ -180,10 +189,14 @@ article div{
    .new input{ width: 95%; margin:0 auto; display: block; }
 
    article{ padding:.5em .5em; }
-   article i.fa-trash{
+   article i.fa-trash,
+   article i.fa-download{
       position: static;
       margin-top: .4em;
       transform: translateY(0);
+   }
+   article i.fa-trash {
+      color: rgb(255, 255, 255);
    }
    article div{ display: flex; align-items: center; justify-content: center; flex-direction: column; } 
 }
