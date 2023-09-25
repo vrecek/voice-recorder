@@ -1,5 +1,6 @@
 # Voice microphone recorder
-You can: <br>
+What you can do with the audio files: <br>
 -create<br>
 -delete<br>
 -play<br>
+-download<br>
